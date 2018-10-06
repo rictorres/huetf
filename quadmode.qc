@@ -360,6 +360,7 @@ void () StartQuadRound =
 	local string st;
 	local float fl;
 	local entity te;
+	local entity te2;
 	local entity oldself;
 	local entity gren;
 	local entity p;
@@ -426,6 +427,28 @@ void () StartQuadRound =
 	}
 	tfs_winner = 0;
 	round_over = 1;
+
+	te = find (world, classname, "info_tfgoal");
+	while (te != world) {
+		if (te.netname == "blue_det" || te.netname == "red_det") {
+			te2 = self;
+			self = te;
+			self.goal_activation = 2;
+			self.solid = 1;
+			self.goal_state = 2;
+			self = te2;
+		}
+		te = find (te, classname, "info_tfgoal");
+	}
+	te = find (world, classname, "door");
+	while (te != world) {
+		te2 = self;
+		self = te;
+		door_go_down();
+		self.think = LinkDoors;
+		self = te2;
+		te = find (te, classname, "door");
+	}
 
 
 	if (round_active)
