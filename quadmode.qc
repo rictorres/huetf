@@ -110,7 +110,7 @@ void () QuadRoundThink =
 			if (rounds > 1)
 				bprint (2, "ROUND TIME OVER\nNext round begins in 10 seconds\n");
 
-			lightstyle (0, "e");
+//			lightstyle (0, "e");
 			localcmd("serverinfo status Countdown\n");
 
 			self.think = QuadRoundOver;
@@ -215,7 +215,7 @@ void () QuadRoundBegin =
 		self = oldself;
 		te = find (te, classname, "player");
 	}
-	lightstyle (0, "m");
+//	lightstyle (0, "m");
 
 	localcmd ("serverinfo status \"");
 	localcmd ("Starting\"\n");
@@ -547,13 +547,13 @@ void () StartQuadRound =
 	te.cnt = stof (st);
 	quad_winner = CheckWinningTeam();	
 	if (rounds > 1) {
-		lightstyle (0, "e");
+//		lightstyle (0, "e");
 		localcmd("serverinfo status Countdown\n");
 		te.think = QuadRoundBegin;
 		te.nextthink = (time + 0.01);
 	}
 	else {
-		lightstyle (0, "e");
+//		lightstyle (0, "e");
 		localcmd("serverinfo status Countdown\n");
 		te.think = QuadRoundInit;
 		te.nextthink = (time + 1); 
@@ -566,7 +566,7 @@ void () EndRound = {
 			if (rounds > 1) {
 				bprint (2, "ROUND TIME OVER\nNext round begins in 10 seconds\n");
 
-					lightstyle (0, "e");
+//					lightstyle (0, "e");
 					localcmd("serverinfo status Countdown\n");
 
 					self.think = QuadRoundOver;
