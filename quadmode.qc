@@ -164,54 +164,8 @@ void () QuadRoundBegin =
 			self.hook_out = 1;
 		}
 		TeamFortress_RemoveTimers ();
-		if (duel)
-		{
-			if (self.deadflag)
-			{
-				PutClientInServer ();
-			}
-			else
-			{
-				if ((self.tfstate & 8))
-				{
-					self.tfstate = 8;
-				}
-				else
-				{
-					self.tfstate = 0;
-				}
-				self.takedamage = 2;
-				self.flags = 8;
-				self.air_finished = (time + 12);
-				self.dmg = 2;
-				self.super_damage_finished = 0;
-				self.radsuit_finished = 0;
-				self.invisible_finished = 0;
-				self.invincible_finished = 0;
-				self.effects = 0;
-				self.invincible_time = 0;
-				self.reload_shotgun = 0;
-				self.reload_super_shotgun = 0;
-				self.reload_grenade_launcher = 0;
-				self.reload_tribolt = 0;
-				self.reload_rocket_launcher = 0;
-				if (sniperpower)
-					self.reload_sniper_rifle = 0;
-				self.on_hook = 0;
-				self.hook_out = 0;
-				self.fire_held_down = 0;
-				self.mapcount = _d;
-				TeamFortress_SetEquipment ();
-				TeamFortress_SetHealth ();
-				TeamFortress_SetSpeed (self);
-				stuffcmd (self, "v_cshift; wait; bf\n");
-			}
-			stuffcmd (self, "play fight.wav\n");
-		}
-		else
-		{
-			PutClientInServer ();
-		}
+		setspawnparms (self);
+		PutClientInServer ();
 		self = oldself;
 		te = find (te, classname, "player");
 	}
