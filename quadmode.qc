@@ -110,7 +110,7 @@ void () QuadRoundThink =
 			if (rounds > 1)
 				bprint (2, "ROUND TIME OVER\nNext round begins in 10 seconds\n");
 
-			lightstyle (0, "e");
+//			lightstyle (0, "e");
 			localcmd("serverinfo status Countdown\n");
 
 			self.think = QuadRoundOver;
@@ -169,7 +169,7 @@ void () QuadRoundBegin =
 		self = oldself;
 		te = find (te, classname, "player");
 	}
-	lightstyle (0, "m");
+//	lightstyle (0, "m");
 
 	localcmd ("serverinfo status \"");
 	localcmd ("Starting\"\n");
@@ -314,6 +314,7 @@ void () StartQuadRound =
 	local string st;
 	local float fl;
 	local entity te;
+	local entity te2;
 	local entity oldself;
 	local entity gren;
 	local entity p;
@@ -368,6 +369,7 @@ void () StartQuadRound =
 			p = find (p, classname, "player");
 		}
 		bprint (2, "Rounds Over! Use \"cmd map <mapname>\" to go to the nextmap\n");
+		localcmd("stop\n");
 		return;
 	}
 	if ((rounds > 1))
@@ -380,6 +382,28 @@ void () StartQuadRound =
 	}
 	tfs_winner = 0;
 	round_over = 1;
+
+	te = find (world, classname, "info_tfgoal");
+	while (te != world) {
+		if (te.netname == "blue_det" || te.netname == "red_det") {
+			te2 = self;
+			self = te;
+			self.goal_activation = 2;
+			self.solid = 1;
+			self.goal_state = 2;
+			self = te2;
+		}
+		te = find (te, classname, "info_tfgoal");
+	}
+	te = find (world, classname, "door");
+	while (te != world) {
+		te2 = self;
+		self = te;
+		door_go_down();
+		self.think = LinkDoors;
+		self = te2;
+		te = find (te, classname, "door");
+	}
 
 
 	if (round_active)
@@ -477,13 +501,13 @@ void () StartQuadRound =
 	te.cnt = stof (st);
 	quad_winner = CheckWinningTeam();	
 	if (rounds > 1) {
-		lightstyle (0, "e");
+//		lightstyle (0, "e");
 		localcmd("serverinfo status Countdown\n");
 		te.think = QuadRoundBegin;
 		te.nextthink = (time + 0.01);
 	}
 	else {
-		lightstyle (0, "e");
+//		lightstyle (0, "e");
 		localcmd("serverinfo status Countdown\n");
 		te.think = QuadRoundInit;
 		te.nextthink = (time + 1); 
@@ -496,7 +520,7 @@ void () EndRound = {
 			if (rounds > 1) {
 				bprint (2, "ROUND TIME OVER\nNext round begins in 10 seconds\n");
 
-					lightstyle (0, "e");
+//					lightstyle (0, "e");
 					localcmd("serverinfo status Countdown\n");
 
 					self.think = QuadRoundOver;
